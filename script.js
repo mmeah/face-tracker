@@ -56,8 +56,10 @@ function drawMyFace(){
     
     if(positions.length>0){
       drawMyFaceLine(positions);
-      drawMyFaceDots(positions);
-
+      if(debugMode){
+        drawMyFaceDots(positions);
+      }
+      drawBothMyEyes(positions)
     }
 
     if(isVideoStarted() || mockMode){
@@ -80,12 +82,12 @@ function drawMyFaceDots(positions){
     const posY = positions[i][1];
     drawCircle(posX, posY);
     if(debugMode){
-          if(mockMode){
-            drawText(i,posX, posY);                  
-          }else{
-            drawText(i,posX, posY,'white');
-          }
-      }
+        if(mockMode){
+          drawText(i,posX, posY);                  
+        }else{
+          drawText(i,posX, posY,'white');
+        }
+    }
   }
 }
 
@@ -105,4 +107,48 @@ function drawMyFaceLine(positions){
     const dotEndY = positions[dotEnd][1];
     drawLine(dotStartX, dotStartY, dotEndX, dotEndY);
   }
+}
+
+/**
+ * Draws the face eyes
+ * @param positions - array of face positions
+ */
+function drawBothMyEyes(positions){
+  const leftEye = 27;
+  const rightEye = 32;
+  const growRatio = 4;
+  let eyeSize = positions[rightEye][0]/growRatio - positions[leftEye][0]/growRatio;
+
+
+  let posX = positions[leftEye][0];
+  let posY = positions[leftEye][1];
+  drawMyEye(posX, posY, eyeSize);
+
+  posX = positions[rightEye][0];
+  posY = positions[rightEye][1];
+  drawMyEye(posX, posY, eyeSize);
+}
+
+function drawMyEye(x,y, eyeSize){
+  drawCircle(x, y, 'white', eyeSize);
+  drawCircle(x, y, 'brown', eyeSize/3);
+  drawEyeLid(x, y+2, 'green', eyeSize, 0, Math.PI);
+  drawEyeLid(x, y-2, 'green', eyeSize, Math.PI,0);
+
+  // context.beginPath();
+  // context.fillStyle = 'tan';
+  // context.arc(x, y+2, eyeSize, 0, Math.PI );
+  // context.fill();
+
+  // context.beginPath();
+  // context.fillStyle = 'tan';
+  // context.arc(x, y-2, eyeSize, Math.PI, 0 );
+  // context.fill();
+}
+
+function drawEyeLid(x, y, color, eyeSize, sAngle, eAngle){
+  context.beginPath();
+  context.fillStyle = color;
+  context.arc(x, y, eyeSize, sAngle, eAngle);
+  context.fill();
 }

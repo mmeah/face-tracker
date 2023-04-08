@@ -95,7 +95,7 @@ function getFTPositions(){
 }
 
 /**
- * Gets the Face Tracker Positions
+ * Gets the Face Tracker Score
  * @returns number - score of face detection from 0 - 100
  */
 function getFTScore(){
@@ -142,8 +142,10 @@ const Direction = {
 function drawCircle(x, y, color, size){
     if(!color) color = 'red';
     if(!size) size = 2;
+    context.beginPath();
     context.fillStyle = color;
-    context.fillRect(x, y, size, size);
+    context.arc(x, y, size, 0, 2 * Math.PI);
+    context.fill();
 }
 
 
