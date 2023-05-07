@@ -64,7 +64,7 @@ function drawMyFace(){
     if(positions.length>0){
       drawMyFaceLine(positions);
       drawMyFaceDots(positions);
-
+      drawMyEyes(positions);
     }
 
     if(isVideoStarted() || mockMode){
@@ -120,4 +120,34 @@ function drawMyFaceLine(positions){
     drawLine(x1,y1,x2,y2,'green');
     // connect the dots positions with drawLine
   }
+
+}
+
+function drawMyEyes(positions){
+
+  const leftEye=27;
+  const rightEye=32;
+  const eyeSize=10;
+  const leftEyeX=positions[leftEye][0];
+  const leftEyeY=positions[leftEye][1];
+  const rightEyeX=positions[rightEye][0];
+  const rightEyeY=positions[rightEye][1];
+  drawMyEye(leftEyeX,leftEyeY,eyeSize);
+  drawMyEye(rightEyeX,rightEyeY,eyeSize);
+  
+  
+}
+
+function drawMyEye(x,y,eyeSize){
+  drawCircle(x,y,'white',eyeSize);
+  drawCircle(x,y,'red',eyeSize/3);
+  drawMyEyeLid(x,y+2,'green',eyeSize,0,Math.PI);
+  drawMyEyeLid(x,y-2,'green',eyeSize,Math.PI,0);
+}
+
+function drawMyEyeLid(x,y,color,eyeSize,sAngle,eAngle){
+  context.beginPath();
+  context.fillStyle = color;
+  context.arc(x, y, eyeSize,sAngle,eAngle);
+  context.fill();
 }
